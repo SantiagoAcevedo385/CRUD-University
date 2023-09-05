@@ -1,0 +1,70 @@
+﻿@model IEnumerable<AppSantiago.Models.Enrollment>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Grados</h1>
+
+<p>
+    <a class="btn btn-success" asp-action="Create">Crear Grado</a>
+</p>
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            <a class="btn btn-sm btn-outline-success" asp-action="Index">Restaurar lista</a>
+            <div class="input-group">
+                <span class="input-group-text">Buscar por grado:</span>
+                <select name="SearchGrade" class="form-control">
+                    <option value="">All</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                    <option value="F">F</option>
+                </select>
+                <input type="submit" value="Buscar" class="btn btn-dark" />
+            </div>
+       
+        </p>
+    </div>
+</form>
+
+<table class="table table-bordered table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Grade)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Course)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Grade)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Course.Title)
+            </td>
+            <td>
+                    <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@item.EnrollmentID">Editar</a> |
+                    <a class="btn btn-sm btn-outline-primary"  asp-action="Details" asp-route-id="@item.EnrollmentID">Detalle</a> |
+                    <a class ="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.EnrollmentID">Eliminar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

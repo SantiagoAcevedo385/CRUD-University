@@ -20,7 +20,7 @@ namespace AppSantiago.Controllers
         }
 
         // GET: Courses
-        public async Task<IActionResult> Index(string sortOrder, string SearchString)
+        public async Task<IActionResult> Index(string sortOrder, string SearchString, string filterBy)
         {
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
@@ -30,8 +30,16 @@ namespace AppSantiago.Controllers
 
             if (!String.IsNullOrEmpty(SearchString))
             {
-                courses = courses.Where(s => s.Title.Contains(SearchString) || s.Credito.Contains(SearchString));
+                if (filterBy == "Title")
+                {
+                    courses = courses.Where(s => s.Title.Contains(SearchString));
+                }
+                else if (filterBy == "Credito")
+                {
+                    courses = courses.Where(s => s.Credito.Contains(SearchString));
+                }
             }
+
             switch (sortOrder)
             {
                 case "name_desc":
@@ -47,6 +55,7 @@ namespace AppSantiago.Controllers
                     courses = courses.OrderBy(s => s.Title);
                     break;
             }
+
             return View(await courses.AsNoTracking().ToListAsync());
         }
 

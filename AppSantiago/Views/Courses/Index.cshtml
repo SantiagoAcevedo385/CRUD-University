@@ -14,9 +14,13 @@
     <div class="form-actions no-color">
         <p>
             <a class="btn btn-sm btn-outline-success" asp-action="Index">Restaurar lista</a>
-            Busca por nombre: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            Busca por: 
+            <select name="filterBy">
+                <option value="Title">Título</option>
+                <option value="Credito">Créditos</option>
+            </select>
+            <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
             <input type="submit" value="Buscar" class="btn btn-dark" />
-            
         </p>
     </div>
 </form>
@@ -28,6 +32,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Credito)
+            </th>
+            <th>
+                Acciones
             </th>
             <th></th>
         </tr>
